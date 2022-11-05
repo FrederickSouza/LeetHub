@@ -69,6 +69,8 @@ const upload = (
   // To validate user, load user object from GitHub.
   const URL = `https://api.github.com/repos/${hook}/contents/${directory}/${filename}`;
 
+  //test code: add define languageName
+
   /* Define Payload */
   let data = {
     message: msg,
@@ -95,7 +97,12 @@ const upload = (
             stats.hard = 0;
             stats.sha = {};
           }
+          //test code: modify filePath
           const filePath = directory + filename;
+          
+          //const filePath = directory + filename;
+
+
           // Only increment solved problems statistics once
           // New submission commits twice (README and problem)
           if (filename === 'README.md' && sha === null) {
