@@ -57,7 +57,23 @@ function findLanguage() {
 
 //test code: x3 - define language
 function getLanguageName() {
-  return 'Java [Teste~]';
+  console.log('e0 - getLanguageName');
+
+  const tag = [
+    ...document.getElementsByClassName('ant-select-selection-selected-value'),
+    ...document.getElementsByClassName('Select-value-label'),
+  ];
+
+  if (tag && tag.length > 0) {
+    for (let i = 0; i < tag.length; i += 1) {
+      const elem = tag[i].textContent;
+      if (elem !== undefined && languages[elem] !== undefined) {
+        return elem;
+      }
+    }
+  }
+
+  return null;
 }
 
 /* Main function for uploading code to GitHub repo, and callback cb is called if success */
