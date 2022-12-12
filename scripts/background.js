@@ -1,4 +1,7 @@
 function handleMessage(request) {
+  //test code
+  console.log('test message from background.js');
+
   if (
     request &&
     request.closeWebPage === true &&

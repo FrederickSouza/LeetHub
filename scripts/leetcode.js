@@ -55,6 +55,11 @@ function findLanguage() {
   return null;
 }
 
+//test code: x3 - define language
+function getLanguageName() {
+  return 'Java [Teste~]';
+}
+
 /* Main function for uploading code to GitHub repo, and callback cb is called if success */
 const upload = (
   token,
@@ -66,10 +71,26 @@ const upload = (
   msg,
   cb = undefined,
 ) => {
-  // To validate user, load user object from GitHub.
-  const URL = `https://api.github.com/repos/${hook}/contents/${directory}/${filename}`;
+  //test code: d0 log
+  const languageName = getLanguageName();
 
-  //test code: add define languageName
+  console.log(`d0 - [final~] upload called with:
+  token: ${token}
+  hook: ${hook}
+  code: ${code}
+  directory: ${directory}
+  filename: ${filename}
+  sha: ${sha}
+  msg: ${msg}
+  cb: ${cb}
+  ~continue~
+  languageName: ${languageName}
+  `);
+
+  // To validate user, load user object from GitHub.
+  //test code: x0 - change directory: add language + log
+  const URL = `https://api.github.com/repos/${hook}/contents/${languageName}/${directory}/${filename}`;
+  console.log(`x0 - URL: ${URL}`);
 
   /* Define Payload */
   let data = {
@@ -97,11 +118,7 @@ const upload = (
             stats.hard = 0;
             stats.sha = {};
           }
-          //test code: modify filePath
           const filePath = directory + filename;
-          
-          //const filePath = directory + filename;
-
 
           // Only increment solved problems statistics once
           // New submission commits twice (README and problem)
@@ -144,7 +161,12 @@ const update = (
   prepend,
   cb = undefined,
 ) => {
-  const URL = `https://api.github.com/repos/${hook}/contents/${directory}/README.md`;
+  const languageName = getLanguageName();
+  //test code: x1 - change directory: add language + log
+  const URL = `https://api.github.com/repos/${hook}/contents/${languageName}/${directory}/README.md`;
+  console.log(`update called:
+  x1 - URL_readme: ${URL}`);
+  //const URL = `https://api.github.com/repos/${hook}/contents/${directory}/README.md`;
 
   /* Read from existing file on GitHub */
   const xhr = new XMLHttpRequest();
@@ -166,11 +188,13 @@ const update = (
         }
 
         /* Write file with new content to GitHub */
+        //test code: x3 modify directory
         upload(
           token,
           hook,
           newContent,
           directory,
+          //`${languageName}/${directory}`,
           'README.md',
           response.sha,
           msg,
@@ -195,6 +219,19 @@ function uploadGit(
   cb = undefined,
   _diff = undefined,
 ) {
+  //test code: c0 log
+  console.log(`c0 - uploadGit called
+  code: ${code}
+  problemName: ${problemName}
+  fileName: ${fileName}
+  msg: ${msg}
+  action: ${action}
+  prepend: ${prepend}
+  cb: ${cb}
+  _diff: ${_diff}
+  ~continue~
+  `);
+
   // Assign difficulty
   if (_diff && _diff !== undefined) {
     difficulty = _diff.trim();
@@ -228,6 +265,9 @@ function uploadGit(
                 }
 
                 if (action === 'upload') {
+                  //test code: c1 log
+                  console.log('c1 - upload called');
+
                   /* Upload to git. */
                   upload(
                     token,
@@ -240,6 +280,9 @@ function uploadGit(
                     cb,
                   );
                 } else if (action === 'update') {
+                  //test code: c2 log
+                  console.log('c2 - update called');
+
                   /* Update on git */
                   update(
                     token,
@@ -273,6 +316,9 @@ function findCode(
   action,
   cb = undefined,
 ) {
+  //test code: b0 log
+  console.log(`b0 - find code called: `);
+  
   /* Get the submission details url from the submission page. */
   var submissionURL;
   const e = document.getElementsByClassName('status-column__3SUg');
@@ -353,6 +399,9 @@ function findCode(
             }
 
             if (code != null) {
+              //test code: b1 console log + const lang
+              console.log(`b1 - code to upload: ${code}`);
+
               setTimeout(function () {
                 uploadGit(
                   btoa(unescape(encodeURIComponent(code))),
@@ -532,6 +581,9 @@ document.addEventListener('click', (event) => {
     ) ||
     element.parentElement.classList.contains('header-right__2UzF')
   ) {
+    //test code: log
+    console.log('evento click TRUE');
+
     setTimeout(function () {
       /* Only post if post button was clicked and url changed */
       if (
@@ -620,11 +672,17 @@ const loader = setInterval(() => {
   }
 
   if (success) {
+    //test code: a1 log
+    console.log('parsing stats');
+
     probStatement = parseQuestion();
     probStats = parseStats();
   }
 
   if (probStatement !== null) {
+    //test code: a2 log
+    console.log('question parsed');
+
     switch (probType) {
       case NORMAL_PROBLEM:
         successTag[0].classList.add('marked_as_success');
@@ -640,6 +698,9 @@ const loader = setInterval(() => {
     const problemName = getProblemNameSlug();
     const language = findLanguage();
     if (language !== null) {
+      //test code: a3 console log
+      console.log(`Problem name: ${problemName}\nLanguage: ${language}`);
+
       // start upload indicator here
       startUpload();
       chrome.storage.local.get('stats', (s) => {
@@ -654,8 +715,14 @@ const loader = setInterval(() => {
           sha = stats.sha[filePath];
         }
 
+        //test code: a4 console log
+        console.log(`dentro de stats.sha: ${sha} \nfilePath: ${filePath}`);
+
         /* Only create README if not already created */
         if (sha === null) {
+          //test code: a4.1 console log
+          console.log(`readme.md file to upload`);
+
           /* @TODO: Change this setTimeout to Promise */
           uploadGit(
             btoa(unescape(encodeURIComponent(probStatement))),
@@ -671,6 +738,9 @@ const loader = setInterval(() => {
       /* only upload notes if there is any */
       notes = getNotesIfAny();
       if (notes.length > 0) {
+        //test code: a5 console log
+        console.log(`inside notes`);
+
         setTimeout(function () {
           if (notes != undefined && notes.length != 0) {
             console.log('Create Notes');
@@ -688,11 +758,15 @@ const loader = setInterval(() => {
 
       /* Upload code to Git */
       setTimeout(function () {
+        //test code: a6
+        console.log(`a6 - upload to Git`);
+
         findCode(
           uploadGit,
           problemName,
           problemName + language,
-          probStats,
+          //test code: a7 - validando probStats mod 
+          probStats + ' [test code]',
           'upload',
           // callback is called when the code upload to git is a success
           () => {
@@ -820,6 +894,11 @@ chrome.storage.local.get('isSync', (data) => {
     console.log('LeetHub Local storage already synced!');
   }
 });
+
+//Test code: inject only happens once
+const confirma = function (){
+  console.log(`js injected`);
+};
 
 // inject the style
 injectStyle();
