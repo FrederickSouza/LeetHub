@@ -780,9 +780,8 @@ const loader = setInterval(() => {
         findCode(
           uploadGit,
           problemName,
-          problemName + language,
-          //test code: a7 - validando probStats mod 
-          probStats + ' [test code]',
+          problemName + language, 
+          probStats,
           'upload',
           // callback is called when the code upload to git is a success
           () => {
