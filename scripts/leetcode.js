@@ -922,25 +922,51 @@ document.addEventListener('click', (event) => {
     console.log(`click certo no ${element.classList.toString}`);
 
     //test code:>ni 01 - findLanguage update
+    /*
     const languageA = findLanguage();
     const languageB = findLanguageNew();
 
     console.log(`findLanguage
     old: ${languageA}
     new: ${languageB}`);
+    */
 
-
+    //test code:>ni 02 - 
+  
+    const problemName = getProblemNameSlugNew();
+    console.log(`name: ${problemName}`);
 
   }
 });
 
+//test code:ni 02
+function getProblemNameSlugNew() {
+  const questionElem = document.getElementsByClassName(
+    '_1l1MA',
+  );
+  const questionDescriptionElem = document.getElementsByClassName(
+    'question-description__3U1T',
+  );
+
+  let questionTitle = 'unknown-problem';
+  if (checkElem(questionElem)) {
+    let qtitle = document.getElementsByClassName('mr-2 text-lg font-medium text-label-1 dark:text-dark-label-1');
+    if (checkElem(qtitle)) {
+      questionTitle = qtitle[0].innerHTML;
+      //test code: console
+      console.log(`qtitle: ${questionTitle}`);
+    }
+  } else if (checkElem(questionDescriptionElem)) {
+    let qtitle = document.getElementsByClassName('question-title');
+    if (checkElem(qtitle)) {
+      questionTitle = qtitle[0].innerText;
+    }
+  }
+  return addLeadingZeros(convertToSlug(questionTitle));
+}
+
+//test code:ni 01 findLanguage()
 function findLanguageNew() {
-  /*
-  const tag = [
-    ...document.getElementsByClassName('ant-select-selection-selected-value'),
-    ...document.getElementsByClassName('Select-value-label'),
-  ];
-  */
 
   const tag = [
     ...document.getElementsByClassName('text-xs text-label-2 dark:text-dark-label-2')
