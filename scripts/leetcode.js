@@ -957,8 +957,6 @@ function findLanguageNew() {
   return null;
 }
 
-
-
 // inject the style
 injectStyle();
 
