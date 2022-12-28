@@ -910,10 +910,54 @@ chrome.storage.local.get('isSync', (data) => {
   }
 });
 
-//Test code: inject only happens once
-const confirma = function (){
-  console.log(`js injected`);
-};
+//Test code:>ni
+document.addEventListener('click', (event) => {
+  console.log(`click~`)
+  let element = event.target;
+  let listElements = ['mr-2', 'text-lg'];
+
+  if((element.classList.contains(listElements[0]) &&
+  element.classList.contains(listElements[1]))
+  || element.classList.contains('css-v3d350')){
+    console.log(`click certo no ${element.classList.toString}`);
+
+    //test code:>ni 01 - findLanguage update
+    const languageA = findLanguage();
+    const languageB = findLanguageNew();
+
+    console.log(`findLanguage
+    old: ${languageA}
+    new: ${languageB}`);
+
+
+
+  }
+});
+
+function findLanguageNew() {
+  /*
+  const tag = [
+    ...document.getElementsByClassName('ant-select-selection-selected-value'),
+    ...document.getElementsByClassName('Select-value-label'),
+  ];
+  */
+
+  const tag = [
+    ...document.getElementsByClassName('text-xs text-label-2 dark:text-dark-label-2')
+  ]
+
+  if (tag && tag.length > 0) {
+    for (let i = 0; i < tag.length; i += 1) {
+      const elem = tag[i].textContent;
+      if (elem !== undefined && languages[elem] !== undefined) {
+        return languages[elem]; // should generate respective file extension
+      }
+    }
+  }
+  return null;
+}
+
+
 
 // inject the style
 injectStyle();
