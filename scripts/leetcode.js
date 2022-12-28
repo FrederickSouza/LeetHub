@@ -426,6 +426,7 @@ function convertToSlug(string) {
     .replace(/^-+/, '') // Trim - from start of text
     .replace(/-+$/, ''); // Trim - from end of text
 }
+/*
 function getProblemNameSlug() {
   const questionElem = document.getElementsByClassName(
     'content__u3I1 question-content__JfgR',
@@ -436,6 +437,30 @@ function getProblemNameSlug() {
   let questionTitle = 'unknown-problem';
   if (checkElem(questionElem)) {
     let qtitle = document.getElementsByClassName('css-v3d350');
+    if (checkElem(qtitle)) {
+      questionTitle = qtitle[0].innerHTML;
+    }
+  } else if (checkElem(questionDescriptionElem)) {
+    let qtitle = document.getElementsByClassName('question-title');
+    if (checkElem(qtitle)) {
+      questionTitle = qtitle[0].innerText;
+    }
+  }
+  return addLeadingZeros(convertToSlug(questionTitle));
+}
+*/
+//test code:ni 02 getProblemNameSlug() new
+function getProblemNameSlug() {
+  const questionElem = document.getElementsByClassName(
+    '_1l1MA',
+  );
+  const questionDescriptionElem = document.getElementsByClassName(
+    'question-description__3U1T',
+  );
+
+  let questionTitle = 'unknown-problem';
+  if (checkElem(questionElem)) {
+    let qtitle = document.getElementsByClassName('mr-2 text-lg font-medium text-label-1 dark:text-dark-label-1');
     if (checkElem(qtitle)) {
       questionTitle = qtitle[0].innerHTML;
     }
