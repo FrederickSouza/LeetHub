@@ -58,6 +58,7 @@ function findLanguage() {
 */
 
 //test code:ni findLanguage()
+/* Get file extension for submission */
 function findLanguage() {
   //tag gets language name
   const tag = [
