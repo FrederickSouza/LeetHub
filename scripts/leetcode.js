@@ -37,6 +37,7 @@ let difficulty = '';
 let uploadState = { uploading: false };
 
 /* Get file extension for submission */
+/*
 function findLanguage() {
   const tag = [
     ...document.getElementsByClassName(
@@ -44,6 +45,25 @@ function findLanguage() {
     ),
     ...document.getElementsByClassName('Select-value-label'),
   ];
+  if (tag && tag.length > 0) {
+    for (let i = 0; i < tag.length; i += 1) {
+      const elem = tag[i].textContent;
+      if (elem !== undefined && languages[elem] !== undefined) {
+        return languages[elem]; // should generate respective file extension
+      }
+    }
+  }
+  return null;
+}
+*/
+
+//test code:ni findLanguage()
+function findLanguage() {
+  //tag gets language name
+  const tag = [
+    ...document.getElementsByClassName('text-xs text-label-2 dark:text-dark-label-2')
+  ]
+
   if (tag && tag.length > 0) {
     for (let i = 0; i < tag.length; i += 1) {
       const elem = tag[i].textContent;
