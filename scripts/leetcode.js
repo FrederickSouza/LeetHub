@@ -931,13 +931,37 @@ document.addEventListener('click', (event) => {
     new: ${languageB}`);
     */
 
-    //test code:>ni 02 - 
-  
+    //test code:>ni 02 - getProblemNameSlug update
+    /*
     const problemName = getProblemNameSlugNew();
     console.log(`name: ${problemName}`);
+    */
 
+    //test code:>ni 03
+    /*
+    const parsedCode = parseCodeNew();
+    console.log(`parsedCode: ${parsedCode}`);
+    //result: code cuts off the comments or other lines [not working properly]
+    */
+
+    //test code:>ni 04
   }
 });
+
+//test code:ni 03
+function parseCodeNew() {
+  const e = document.getElementsByClassName('view-lines monaco-mouse-cursor-text');
+  if (e !== undefined && e.length > 0) {
+    const elem = e[0];
+    let parsedCode = '';
+    const textArr = elem.innerText.split('\n');
+    for (let i = 1; i < textArr.length; i += 2) {
+      parsedCode += `${textArr[i]}\n`;
+    }
+    return parsedCode;
+  }
+  return null;
+}
 
 //test code:ni 02
 function getProblemNameSlugNew() {
