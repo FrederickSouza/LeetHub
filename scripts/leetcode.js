@@ -918,7 +918,10 @@ document.addEventListener('click', (event) => {
 
   if((element.classList.contains(listElements[0]) &&
   element.classList.contains(listElements[1]))
-  || element.classList.contains('css-v3d350')){
+  || element.classList.contains('css-v3d350')
+  || element.classList.contains('pagination-screen__12p7')
+  || element.classList.contains('px-3','py-1.5', 'font-medium', 'items-center'))
+  {
     console.log(`click certo no ${element.classList.toString}`);
 
     //test code:>ni 01 - findLanguage update
@@ -946,14 +949,46 @@ document.addEventListener('click', (event) => {
     */
 
     //test code:>ni 04 parseQuestion update
+    /*
     const parsedQuestionA = parseQuestionNew();
     const parsedQuestionB = parseQuestion();
     console.log(`parsedQuestionA: ${parsedQuestionA}\n
     ~~~~~~~~~~~~
     parsedQuestionB: ${parsedQuestionB}`);
+    */
+
+    //test code:>ni 05 
+    const parsedStatsA = parseStatsNew();
+    const parsedStatsB = parseStats();
+    console.log(`parsedStatsA: ${parsedStatsA}\nparsedStatsB: ${parsedStatsB}`);
 
   }
 });
+
+//test code:ni 05 parseStats() new
+/* Parser function for time/space stats */
+function parseStatsNew() {
+  //check for submitted question stats
+  const runtimeAndMemory = document.getElementsByClassName(
+    'text-label-1 dark:text-dark-label-1 ml-2 font-medium',
+  );
+  if(!checkElem(runtimeAndMemory)){
+    return null;
+  }
+
+  const time = runtimeAndMemory[0].textContent;
+  const space = runtimeAndMemory[1].textContent;
+
+  const timePercentile = document.getElementsByClassName(
+    'text-white dark:text-dark-white ml-2 rounded-xl px-1.5 font-medium bg-blue-s dark:bg-dark-blue-s',
+  )[0].textContent;
+  const spacePercentile = document.getElementsByClassName(
+    'text-white dark:text-dark-white ml-2 rounded-xl px-1.5 font-medium bg-purple dark:bg-dark-purple',
+  )[0].textContent;
+
+  // Format commit message
+  return `Time: ${time} (${timePercentile}), Space: ${space} (${spacePercentile}) - LeetHub`;
+}
 
 //test code:ni 04
 /* Parser function for the question and tags */
