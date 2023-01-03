@@ -57,7 +57,7 @@ function findLanguage() {
 }
 */
 
-//test code:ni findLanguage()
+//test code:ni 01 findLanguage()
 /* Get file extension for submission */
 function findLanguage() {
   //tag gets language name
@@ -543,6 +543,9 @@ function parseQuestion() {
   return null;
 }
 */
+
+//test code:ni 04 parseQuestion() new
+/* Parser function for the question and tags */
 function parseQuestion() {
   var questionUrl = window.location.href;
   if (questionUrl.endsWith('/submissions/')) {
