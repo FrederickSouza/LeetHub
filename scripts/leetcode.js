@@ -621,6 +621,7 @@ function parseQuestion() {
 }
 
 /* Parser function for time/space stats */
+/*
 function parseStats() {
   const probStats = document.getElementsByClassName('data__HC-i');
   if (!checkElem(probStats)) {
@@ -630,6 +631,32 @@ function parseStats() {
   const timePercentile = probStats[1].textContent;
   const space = probStats[2].textContent;
   const spacePercentile = probStats[3].textContent;
+
+  // Format commit message
+  return `Time: ${time} (${timePercentile}), Space: ${space} (${spacePercentile}) - LeetHub`;
+}
+*/
+
+//test code:ni 05 parseStats() new
+/* Parser function for time/space stats */
+function parseStats() {
+  //check for submitted question stats
+  const runtimeAndMemory = document.getElementsByClassName(
+    'text-label-1 dark:text-dark-label-1 ml-2 font-medium',
+  );
+  if(!checkElem(runtimeAndMemory)){
+    return null;
+  }
+
+  const time = runtimeAndMemory[0].textContent;
+  const space = runtimeAndMemory[1].textContent;
+
+  const timePercentile = document.getElementsByClassName(
+    'text-white dark:text-dark-white ml-2 rounded-xl px-1.5 font-medium bg-blue-s dark:bg-dark-blue-s',
+  )[0].textContent;
+  const spacePercentile = document.getElementsByClassName(
+    'text-white dark:text-dark-white ml-2 rounded-xl px-1.5 font-medium bg-purple dark:bg-dark-purple',
+  )[0].textContent;
 
   // Format commit message
   return `Time: ${time} (${timePercentile}), Space: ${space} (${spacePercentile}) - LeetHub`;
