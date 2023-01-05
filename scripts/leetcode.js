@@ -333,7 +333,14 @@ function findCode(
   cb = undefined,
 ) {
   //test code: b0 log
-  console.log(`b0 - find code called: `);
+  console.log(`b0 - find code called: 
+  uploadGit: ${uploadGit}
+  problemName: ${problemName}
+  fileName: ${fileName}
+  msg: ${msg}
+  action: ${action}
+  cb: ${cb}
+  ~continue~`);
   
   /* Get the submission details url from the submission page. */
   var submissionURL;
@@ -349,6 +356,8 @@ function findCode(
     const submissionRef = document.getElementById('result-state');
     submissionURL = submissionRef.href;
   }
+  //test code: b0.1 log
+  console.log(`b0.1 - submissionURL: ${submissionURL}`);
 
   if (submissionURL != undefined) {
     /* Request for the submission details page */
@@ -957,13 +966,40 @@ document.addEventListener('click', (event) => {
     parsedQuestionB: ${parsedQuestionB}`);
     */
 
-    //test code:>ni 05 
+    //test code:>ni 05 parseStats() update
+    /*
     const parsedStatsA = parseStatsNew();
     const parsedStatsB = parseStats();
     console.log(`parsedStatsA: ${parsedStatsA}\nparsedStatsB: ${parsedStatsB}`);
+    */
+
+    //test code:> ni 06 getNotesIfAny(); update
+    //[not working]
+    
+    console.log('test code');
+    const notesA = getNotesIfAnyNew();
+    const notesB = getNotesIfAny();
+    console.log(`notesA: ${notesA}\nnotesB: ${notesB}`);
 
   }
 });
+
+//test code:ni 06 getNotesIfAny() new
+function getNotesIfAnyNew() {
+  // there are no notes on expore
+  if (document.URL.startsWith('https://leetcode.com/explore/'))
+    return '';
+
+  //getNotes on results page
+  notes = '';
+  notesTemp = document.getElementsByClassName(
+    'bg-fill-3 dark:bg-dark-fill-3 text-label-1 dark:text-dark-label-1 max-h-[400px] min-h-[40px] w-full rounded-lg px-4 py-2.5 placeholder:text-label-4 dark:placeholder:text-dark-label-4 border border-transparent outline-none focus:border-blue-s',
+  )
+  notes = notesTemp[0].textContent;
+  console.log(`notes: ${notes}`);
+
+  return notes.trim();
+}
 
 //test code:ni 05 parseStats() new
 /* Parser function for time/space stats */
