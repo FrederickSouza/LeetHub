@@ -704,6 +704,7 @@ document.addEventListener('click', (event) => {
 /* function to get the notes if there is any
  the note should be opened atleast once for this to work
  this is because the dom is populated after data is fetched by opening the note */
+ /*
 function getNotesIfAny() {
   // there are no notes on expore
   if (document.URL.startsWith('https://leetcode.com/explore/'))
@@ -731,6 +732,22 @@ function getNotesIfAny() {
       }
     }
   }
+  return notes.trim();
+}
+*/
+//test code:ni 06 getNotesIfAny() new
+function getNotesIfAny() {
+  // there are no notes on expore
+  if (document.URL.startsWith('https://leetcode.com/explore/'))
+    return '';
+
+  //getNotes on results page
+  notes = '';
+  notesTemp = document.getElementsByClassName(
+    'bg-fill-3 dark:bg-dark-fill-3 text-label-1 dark:text-dark-label-1 max-h-[400px] min-h-[40px] w-full rounded-lg px-4 py-2.5 placeholder:text-label-4 dark:placeholder:text-dark-label-4 border border-transparent outline-none focus:border-blue-s',
+  )
+  notes = notesTemp[0].textContent;
+
   return notes.trim();
 }
 
