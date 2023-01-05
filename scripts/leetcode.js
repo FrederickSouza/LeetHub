@@ -974,15 +974,27 @@ document.addEventListener('click', (event) => {
     */
 
     //test code:> ni 06 getNotesIfAny(); update
-    //[not working]
-    
+    //[working]
+    /*
     console.log('test code');
     const notesA = getNotesIfAnyNew();
     const notesB = getNotesIfAny();
     console.log(`notesA: ${notesA}\nnotesB: ${notesB}`);
+    */
+
+    //test code:> ni 07 findCode() test new
+    const code = findCodeTestNew();
+    console.log(`codeTest:: ${code}`);
 
   }
 });
+
+//test code:ni 07 findCode test snippet
+function findCodeTestNew(){
+  codeElem = document.getElementsByTagName('code');
+  code = codeElem[0].textContent;
+  return code;
+}
 
 //test code:ni 06 getNotesIfAny() new
 function getNotesIfAnyNew() {
@@ -990,7 +1002,7 @@ function getNotesIfAnyNew() {
   if (document.URL.startsWith('https://leetcode.com/explore/'))
     return '';
 
-  //getNotes on results page
+  // getNotes on results page
   notes = '';
   notesTemp = document.getElementsByClassName(
     'bg-fill-3 dark:bg-dark-fill-3 text-label-1 dark:text-dark-label-1 max-h-[400px] min-h-[40px] w-full rounded-lg px-4 py-2.5 placeholder:text-label-4 dark:placeholder:text-dark-label-4 border border-transparent outline-none focus:border-blue-s',
