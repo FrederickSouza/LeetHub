@@ -388,6 +388,13 @@ function findCode(
     xhttp.send();
   }
 }
+//test code:ni 07 findCode test snippet
+function findCodeTestNew(){
+  codeElem = document.getElementsByTagName('code');
+  code = codeElem[0].textContent;
+  return code;
+}
+
 
 /* Main parser function for the code */
 function parseCode() {
