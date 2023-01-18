@@ -984,7 +984,9 @@ document.addEventListener('click', (event) => {
 
     //test code:> ni 07 findCode() test new
     const code = findCodeTestNew();
-    console.log(`codeTest:: ${code}`);
+    console.log(`codeTest: ${code}`);
+    testCode(); 
+  
 
   }
 });
@@ -995,6 +997,147 @@ function findCodeTestNew(){
   code = codeElem[0].textContent;
   return code;
 }
+
+function testCode(){
+  console.log(`dentro do testCode()`);
+
+  const e = document.getElementsByClassName(
+    'text-green-s dark:text-dark-green-s flex items-center gap-2 text-[16px] font-medium leading-6',
+  );
+  if (checkElem(e)) {
+    console.log(`element ${e} existe`);
+  }
+}
+
+//not working
+function findCodeNew(
+  uploadGit,
+  problemName,
+  fileName,
+  msg,
+  action,
+  cb = undefined,
+) {
+  //test code: b0 log
+  console.log(`b0 - find code called: 
+  uploadGit: ${uploadGit}
+  problemName: ${problemName}
+  fileName: ${fileName}
+  msg: ${msg}
+  action: ${action}
+  cb: ${cb}
+  ~continue~`);
+  
+  /* Get the submission details url from the submission page. */
+  var submissionURL;
+  const e = document.getElementsByClassName(
+    'text-green-s dark:text-dark-green-s flex items-center gap-2 text-[16px] font-medium leading-6',
+  );
+  if (checkElem(e)) {
+    // for normal problem submisson
+    const submissionRef = e[1].innerHTML.split(' ')[1];
+    submissionURL =
+      'https://leetcode.com' +
+      submissionRef.split('=')[1].slice(1, -1);
+  } else {
+    // for a submission in explore section
+    const submissionRef = document.getElementById('result-state');
+    submissionURL = submissionRef.href;
+  }
+  //test code: b0.1 log
+  console.log(`b0.1 - submissionURL: ${submissionURL}`);
+
+  if (submissionURL != undefined) {
+    /* Request for the submission details page */
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        /* received submission details as html reponse. */
+        var doc = new DOMParser().parseFromString(
+          this.responseText,
+          'text/html',
+        );
+        /* the response has a js object called pageData. */
+        /* Pagedata has the details data with code about that submission */
+        var scripts = doc.getElementsByTagName('script');
+        for (var i = 0; i < scripts.length; i++) {
+          var text = scripts[i].innerText;
+          if (text.includes('pageData')) {
+            /* Considering the pageData as text and extract the substring
+            which has the full code */
+            var firstIndex = text.indexOf('submissionCode');
+            var lastIndex = text.indexOf('editCodeUrl');
+            var slicedText = text.slice(firstIndex, lastIndex);
+            /* slicedText has code as like as. (submissionCode: 'Details code'). */
+            /* So finding the index of first and last single inverted coma. */
+            var firstInverted = slicedText.indexOf("'");
+            var lastInverted = slicedText.lastIndexOf("'");
+            /* Extract only the code */
+            var codeUnicoded = slicedText.slice(
+              firstInverted + 1,
+              lastInverted,
+            );
+            /* The code has some unicode. Replacing all unicode with actual characters */
+            var code = codeUnicoded.replace(
+              /\\u[\dA-F]{4}/gi,
+              function (match) {
+                return String.fromCharCode(
+                  parseInt(match.replace(/\\u/g, ''), 16),
+                );
+              },
+            );
+
+            /*
+            for a submisssion in explore section we do not get probStat beforehand
+            so, parse statistics from submisson page
+            */
+            if (!msg) {
+              slicedText = text.slice(
+                text.indexOf('runtime'),
+                text.indexOf('memory'),
+              );
+              const resultRuntime = slicedText.slice(
+                slicedText.indexOf("'") + 1,
+                slicedText.lastIndexOf("'"),
+              );
+              slicedText = text.slice(
+                text.indexOf('memory'),
+                text.indexOf('total_correct'),
+              );
+              const resultMemory = slicedText.slice(
+                slicedText.indexOf("'") + 1,
+                slicedText.lastIndexOf("'"),
+              );
+              msg = `Time: ${resultRuntime}, Memory: ${resultMemory} - LeetHub`;
+            }
+
+            if (code != null) {
+              //test code: b1 console log + const lang
+              console.log(`b1 - code to upload: ${code}`);
+
+              setTimeout(function () {
+                uploadGit(
+                  btoa(unescape(encodeURIComponent(code))),
+                  problemName,
+                  fileName,
+                  msg,
+                  action,
+                  true,
+                  cb,
+                );
+              }, 2000);
+            }
+          }
+        }
+      }
+    };
+
+    xhttp.open('GET', submissionURL, true);
+    xhttp.send();
+  }
+}
+
+
 
 //test code:ni 06 getNotesIfAny() new
 function getNotesIfAnyNew() {
